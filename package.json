@@ -1,0 +1,26 @@
+{
+  "name": "kokoro-io",
+  "description": "kokoro.io SDK for Node.js",
+  "version": "0.1.0",
+  "author": "mohemohe",
+  "dependencies": {
+    "@types/form-data": "^2.2.1",
+    "@types/node-fetch": "^2.1.1",
+    "@types/ws": "^5.1.2",
+    "form-data": "^2.3.2",
+    "node-fetch": "^2.1.2",
+    "postinstall-build": "^5.0.1",
+    "typescript": "^2.9.2",
+    "ws": "^5.2.0"
+  },
+  "devDependencies": {
+    "ts-node": "^6.1.1"
+  },
+  "license": "WTFPL",
+  "main": "dist/index.js",
+  "repository": "git@github.com:mohemohe/kokoro.io.js.git",
+  "scripts": {
+    "build": "tsc",
+    "postinstall": "postinstall-build dist"
+  }
+}

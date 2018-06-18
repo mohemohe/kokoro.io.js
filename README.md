@@ -9,6 +9,8 @@ yarn add mohemohe/kokoro.io.js
 
 ## example
 
+### human
+
 ```js
 const kokoro = require('kokoro-io');
 
@@ -17,13 +19,13 @@ const kokoroIo = new kokoro.io({
 });
 
 kokoroIo.Stream.on('connect', async () => {
-    const memberships = await kokoroIo.Api.getMemberships();
+    const memberships = await kokoroIo.Api.Memberships.getMemberships();
     const channelIds = kokoroIo.Helper.membershipsToChannelIds(memberships);
     kokoroIo.Helper.subscribeChatChannelByChannelIds(kokoroIo.Stream, channelIds);
 
     const postChannelId = kokoroIo.Helper.membershipsToChannelIdByChannelName(memberships, "kokoro.io/テスト用");
     if (postChannelId) {
-        kokoroIo.Api.postChannelMessage(postChannelId, "hi");
+        kokoroIo.Api.Channels.postChannelMessage(postChannelId, 'hi');
     }
 });
 kokoroIo.Stream.on('chat', (message) => {
@@ -33,6 +35,20 @@ kokoroIo.Stream.on('event', (event) => {
     console.log('event:', event);
 });
 kokoroIo.Stream.connect();
+```
+
+### bot
+
+```js
+const kokoro = require('kokoro-io');
+
+const kokoroIo = new kokoro.io({
+    accessToken: 'XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX',
+});
+
+(async () => {
+    kokoroIo.Api.Bot.postChannelMessage('JPERDC16M', 'hu');
+})();
 ```
 
 ## status
@@ -48,19 +64,19 @@ kokoroIo.Stream.connect();
     - [x] reject_subscription
     - [x] send
 - [ ] PreparaEvent
-    - [ ] subscribed 
+    - [ ] subscribed
     - [x] message_created
     - [ ] ？？？
 
 ### API
 
-- [ ] access_tokens 
+- [ ] access_tokens
     - [ ] get /v1/access_tokens
     - [ ] post /v1/access_tokens
     - [ ] delete /v1/access_tokens/{access_token_id}
 
-- [ ] bot
-    - [ ] post /v1/bot/channels/{channel_id}/messages
+- [x] bot
+    - [x] post /v1/bot/channels/{channel_id}/messages
 
 - [ ] channels
     - [ ] get /v1/channels/{channel_id}
@@ -93,4 +109,4 @@ kokoroIo.Stream.connect();
 - [ ] profiles
     - [ ] get /v1/profiles
     - [ ] get /v1/profiles/me
-    - [ ] put /v1/profiles/me 
+    - [ ] put /v1/profiles/me

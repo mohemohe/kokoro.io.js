@@ -53,7 +53,7 @@ export interface IMessageEntity {
     plaintext_content: string;
     raw_content: string;
     embedded_urls: string[];
-    embed_contents: any[];
+    embed_contents: IEmbedContentEntity[];
     published_at: string;
     nsfw: boolean;
     channel: IChannelEntity;

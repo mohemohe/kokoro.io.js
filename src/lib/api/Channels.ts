@@ -16,6 +16,18 @@ export default class Channels extends ApiBase {
         return response.json() as any as IChannelEntity[];
     }
 
+    public async getChannel(channelId: string) {
+        const response = await fetch(`${this.baseUrl}/api/v1/channels/${channelId}`, {
+            method: "GET",
+            headers: this.generateHeader(),
+        });
+        if (!response.ok) {
+            throw new Error();
+        }
+
+        return response.json() as any as IChannelEntity;
+    }
+
     public async postChannelMessage(channelId: string, message: string, nsfw: boolean = false) {
         const body = new FormData();
         body.append("message", message);

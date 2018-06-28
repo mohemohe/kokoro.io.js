@@ -79,7 +79,7 @@ const kokoroIo = new kokoro.io({
     - [x] post /v1/bot/channels/{channel_id}/messages
 
 - [ ] channels
-    - [ ] get /v1/channels/{channel_id}
+    - [x] get /v1/channels/{channel_id}
     - [ ] put /v1/channels/{channel_id}
     - [ ] put /v1/channels/{channel_id}/archive
     - [ ] put /v1/channels/{channel_id}/unarchive

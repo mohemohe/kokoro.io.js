@@ -11,7 +11,7 @@ export interface IMembershipEntity {
     muted: boolean;
     profile: IProfileEntity;
 }
-  
+
 export interface IProfileEntity {
     id: string;
     type: string;
@@ -40,8 +40,6 @@ export interface IChannelWithoutMembershipEntity {
     messages_count: number;
 }
 
-// ----
-
 export interface IMessageEntity {
     id: number;
     idempotent_key: string;
@@ -49,12 +47,12 @@ export interface IMessageEntity {
     avatar: string;
     expand_embed_contents: boolean;
     avatars: IAvatarEntity[];
-    status: string;
+    status: "active" | "deleted_by_publisher" | "deleted_by_another_member";
     content: string;
     html_content: string;
     plaintext_content: string;
     raw_content: string;
-    embedded_urls: any[];
+    embedded_urls: string[];
     embed_contents: any[];
     published_at: string;
     nsfw: boolean;
@@ -62,10 +60,39 @@ export interface IMessageEntity {
     profile: IChannelWithoutMembershipEntity;
 }
 
+export interface IEmbedContentEntity {
+    url: string;
+    position: number;
+    data: IEmbedDataEntity;
+}
+
+export interface IEmbedDataEntity {
+    cache_age: number;
+    medias: IEmbedDataMediaEntity;
+    metadata_image: IEmbedDataMediaEntity;
+    restriction_policy: "Unknown" | "Safe" | "NotSafe";
+    title: string;
+    type: "MixedContent" | "SingleImage" | "SingleVideo" | "SingleAudio";
+    url: string;
+}
+
+export interface IEmbedDataMediaEntity {
+    raw_url: string;
+    restriction_policy: "Unknown" | "Safe" | "NotSafe";
+    type: "Image" | "Video" | "Audio";
+    thumbnail: IEmbedDataImageInfoEntity;
+}
+
+export interface IEmbedDataImageInfoEntity {
+    url: string;
+    width: number;
+    height: number;
+}
+
 export interface IChannelEntity {
     id: string;
     channel_name: string;
-    kind: string;
+    kind: "public_channel" | "private_channel" | "direct_message";
     archived: boolean;
     description: string;
     latest_message_id: number;

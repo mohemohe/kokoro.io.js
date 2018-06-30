@@ -1,3 +1,10 @@
+export interface IAccessTokenEntity {
+    id: string;
+    name: string;
+    token: string;
+    kind: "user" | "device" | "essential";
+}
+
 export interface IMembershipEntity {
     id: string;
     channel: IChannelWithoutMembershipEntity;

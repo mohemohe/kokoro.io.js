@@ -70,10 +70,10 @@ const kokoroIo = new kokoro.io({
 
 ### API
 
-- [ ] access_tokens
-    - [ ] get /v1/access_tokens
-    - [ ] post /v1/access_tokens
-    - [ ] delete /v1/access_tokens/{access_token_id}
+- [x] access_tokens
+    - [x] get /v1/access_tokens
+    - [x] post /v1/access_tokens
+    - [x] delete /v1/access_tokens/{access_token_id}
 
 - [x] bot
     - [x] post /v1/bot/channels/{channel_id}/messages

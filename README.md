@@ -33,7 +33,9 @@ kokoroIo.Stream.on('connect', async () => {
 
     const postChannelId = kokoroIo.Helper.membershipsToChannelIdByChannelName(memberships, "kokoro.io/テスト用");
     if (postChannelId) {
-        kokoroIo.Api.Channels.postChannelMessage(postChannelId, 'もこたんインしたお！');
+        kokoroIo.Api.Channels.postChannelMessage(postChannelId, {
+            message: 'もこたんインしたお！',
+        });
     }
 });
 kokoroIo.Stream.on('chat', (message) => {
@@ -56,7 +58,9 @@ const kokoroIo = new kokoro.io({
 });
 
 (async () => {
-    kokoroIo.Api.Bot.postChannelMessage('JPERDC16M', 'hu');
+    kokoroIo.Api.Bot.postChannelMessage('JPERDC16M', {
+        message: 'hu',
+    });
 })();
 ```
 

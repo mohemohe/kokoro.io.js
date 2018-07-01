@@ -109,12 +109,12 @@ const kokoroIo = new kokoro.io({
     - [ ] post /v1/devices
     - [ ] delete /v1/devices/{device_identifier}
 
-- [ ] memberships
+- [x] memberships
     - [x] get /v1/memberships
-    - [ ] post /v1/memberships
-    - [ ] delete /v1/memberships/{id}
-    - [ ] put /v1/memberships/{id}
-    - [ ] put /v1/memberships/{id}/join
+    - [x] post /v1/memberships
+    - [x] delete /v1/memberships/{id}
+    - [x] put /v1/memberships/{id}
+    - [x] put /v1/memberships/{id}/join
 
 - [x] messages
     - [x] delete /v1/messages/{message_id}

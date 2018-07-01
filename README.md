@@ -115,7 +115,7 @@ const kokoroIo = new kokoro.io({
 - [x] messages
     - [x] delete /v1/messages/{message_id}
 
-- [ ] profiles
-    - [ ] get /v1/profiles
-    - [ ] get /v1/profiles/me
-    - [ ] put /v1/profiles/me
+- [x] profiles
+    - [x] get /v1/profiles
+    - [x] get /v1/profiles/me
+    - [x] put /v1/profiles/me

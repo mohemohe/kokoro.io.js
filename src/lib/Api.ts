@@ -3,6 +3,7 @@ import Bot from "./api/Bot";
 import Channels from "./api/Channels";
 import Memberships from "./api/Memberships";
 import Messages from "./api/Messages";
+import Profiles from "./api/Profiles";
 
 export default class Api {
     public AccessTokens: AccessTokens;
@@ -10,6 +11,7 @@ export default class Api {
     public Channels: Channels;
     public Memberships: Memberships;
     public Messages: Messages;
+    public Profiles: Profiles;
 
     constructor(baseUrl: string, accessToken: string) {
         this.AccessTokens = new AccessTokens(baseUrl, accessToken);
@@ -17,6 +19,7 @@ export default class Api {
         this.Channels = new Channels(baseUrl, accessToken);
         this.Memberships = new Memberships(baseUrl, accessToken);
         this.Messages = new Messages(baseUrl, accessToken);
+        this.Profiles = new Profiles(baseUrl, accessToken);
     }
 }
 

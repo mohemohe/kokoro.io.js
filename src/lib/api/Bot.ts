@@ -1,17 +1,18 @@
 import fetch from "node-fetch";
-import FormData from "form-data";
 import ApiBase from "./ApiBase";
 import { IMessageEntity } from "../IPuripara";
 
+export interface IPostChannelMessageBody {
+    message: string;
+    nsfw?: boolean;
+}
+
 export default class Bot extends ApiBase {
-    public async postChannelMessage(channelId: string, message: string, nsfw: boolean = false) {
-        const body = new FormData();
-        body.append("message", message);
-        body.append("nsfw", JSON.stringify(nsfw));
+    public async postChannelMessage(channelId: string, body: IPostChannelMessageBody) {
         const response = await fetch(`${this.baseUrl}/api/v1/bot/channels/${channelId}/messages`, {
             method: "POST",
             headers: this.generateHeader(),
-            body,
+            body: this.generateFormData(body),
         });
         if (!response.ok) {
             throw new Error();

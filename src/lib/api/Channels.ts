@@ -1,7 +1,13 @@
 import fetch from "node-fetch";
-import FormData from "form-data";
 import ApiBase from "./ApiBase";
 import { IMessageEntity, IChannelEntity } from "../IPuripara";
+
+export interface IPostChannelMessageBody {
+    message: string;
+    nsfw?: boolean;
+    idempotent_key?: string;
+    expand_embed_contents?: string;
+}
 
 export default class Channels extends ApiBase {
     public async getChannels(archived: boolean = true) {
@@ -28,14 +34,29 @@ export default class Channels extends ApiBase {
         return response.json() as any as IChannelEntity;
     }
 
-    public async postChannelMessage(channelId: string, message: string, nsfw: boolean = false) {
-        const body = new FormData();
-        body.append("message", message);
-        body.append("nsfw", JSON.stringify(nsfw));
+    public async getChannelMessages(channelId: string, limit?: number, before_id?: number, after_id?: number) {
+        const params = this.generateQueryParameter({
+            limit,
+            before_id,
+            after_id,
+        });
+        console.log(`${this.baseUrl}/api/v1/channels/${channelId}/messages${params}`);
+        const response = await fetch(`${this.baseUrl}/api/v1/channels/${channelId}/messages${params}`, {
+            method: "GET",
+            headers: this.generateHeader(),
+        });
+        if (!response.ok) {
+            throw new Error();
+        }
+
+        return response.json() as any as IMessageEntity[];
+    }
+
+    public async postChannelMessage(channelId: string, body: IPostChannelMessageBody) {
         const response = await fetch(`${this.baseUrl}/api/v1/channels/${channelId}/messages`, {
             method: "POST",
             headers: this.generateHeader(),
-            body,
+            body: this.generateFormData(body),
         });
         if (!response.ok) {
             throw new Error();

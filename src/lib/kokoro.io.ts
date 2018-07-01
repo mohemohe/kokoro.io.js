@@ -3,17 +3,17 @@ import Api from "./Api";
 import Helper from "./Helper";
 
 export interface IOption extends IDefaultOption {
-    accessToken: string; 
+    accessToken: string;
 }
 
 interface IDefaultOption {
     baseUrl?: string;
     cableUrl?: string;
-    autoReconnect?: boolean;   
+    autoReconnect?: boolean;
 }
 
 interface IKokoroIoOption extends IOption  {
-} 
+}
 
 interface IKokoroIo {
     io: {

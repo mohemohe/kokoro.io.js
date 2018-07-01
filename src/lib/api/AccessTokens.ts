@@ -1,7 +1,10 @@
 import fetch from "node-fetch";
-import FormData from "form-data";
 import ApiBase from "./ApiBase";
 import { IAccessTokenEntity } from "../IPuripara";
+
+export interface IPostAccessTokenBody {
+    name: string;
+}
 
 export default class AccessTokens extends ApiBase {
     public async getAccesstokens() {
@@ -16,13 +19,11 @@ export default class AccessTokens extends ApiBase {
         return response.json() as any as IAccessTokenEntity[];
     }
 
-    public async postAccesstoken(name: string) {
-        const body = new FormData();
-        body.append("name", name);
+    public async postAccesstoken(body: IPostAccessTokenBody) {
         const response = await fetch(`${this.baseUrl}/api/v1/access_tokens`, {
             method: "POST",
             headers: this.generateHeader(),
-            body,
+            body: this.generateFormData(body),
         });
         if (!response.ok) {
             throw new Error();

@@ -1,6 +1,4 @@
-import fetch from "node-fetch";
 import FormData from "form-data";
-import {IMembershipEntity, IMessageEntity} from "../IPuripara";
 
 export default class ApiBase {
     protected baseUrl: string;
@@ -15,6 +13,24 @@ export default class ApiBase {
         return Object.assign({}, {
             "X-Access-Token": this.accessToken,
         }, override);
+    }
+
+    protected generateQueryParameter(params: any) {
+        const queryArray: string[] = [];
+        Object.keys(params).forEach((key) => {
+            if (params[key]) {
+                queryArray.push(`${key}=${params[key]}`);
+            }
+        });
+        return queryArray.length > 0 ? `?${queryArray.join("&")}` : "";
+    }
+
+    protected generateFormData(body: any) {
+        const form = new FormData();
+        Object.keys(body).forEach((key) => {
+            form.append(key, body[key]);
+        });
+        return form;
     }
 }
 

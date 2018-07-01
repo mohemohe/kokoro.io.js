@@ -1,17 +1,25 @@
 # kokoro.io.js
-kokoro.io SDK for Node.js
 
-## install
+[kokoro.io](https://kokoro.io) SDK for Node.js
+
+## breaking changes!
+
+https://github.com/mohemohe/kokoro.io.js/wiki/%E8%A8%AD%E8%A8%88%E6%96%B9%E9%87%9D
+
+## インストール
+
+npmには公開していません
 
 ```bash
 yarn add mohemohe/kokoro.io.js
 ```
 
-## example
+## サンプル
 
-### human
+### stream
 
 ```js
+require('source-map-support').install();
 const kokoro = require('kokoro-io');
 
 const kokoroIo = new kokoro.io({
@@ -25,7 +33,7 @@ kokoroIo.Stream.on('connect', async () => {
 
     const postChannelId = kokoroIo.Helper.membershipsToChannelIdByChannelName(memberships, "kokoro.io/テスト用");
     if (postChannelId) {
-        kokoroIo.Api.Channels.postChannelMessage(postChannelId, 'hi');
+        kokoroIo.Api.Channels.postChannelMessage(postChannelId, 'もこたんインしたお！');
     }
 });
 kokoroIo.Stream.on('chat', (message) => {
@@ -40,6 +48,7 @@ kokoroIo.Stream.connect();
 ### bot
 
 ```js
+require('source-map-support').install();
 const kokoro = require('kokoro-io');
 
 const kokoroIo = new kokoro.io({
@@ -51,7 +60,7 @@ const kokoroIo = new kokoro.io({
 })();
 ```
 
-## status
+## 実装ステータス
 
 ### Stream
 
@@ -88,7 +97,7 @@ const kokoroIo = new kokoro.io({
     - [ ] post /v1/channels
     - [ ] post /v1/channels/direct_message
     - [ ] put /v1/channels/{channel_id}/manage_members/{member_id}
-    - [ ] get /v1/channels/{channel_id}/messages
+    - [x] get /v1/channels/{channel_id}/messages
     - [x] post /v1/channels/{channel_id}/messages
 
 - [ ] devices
@@ -103,8 +112,8 @@ const kokoroIo = new kokoro.io({
     - [ ] put /v1/memberships/{id}
     - [ ] put /v1/memberships/{id}/join
 
-- [ ] messages
-    - [ ] delete /v1/messages/{message_id}
+- [x] messages
+    - [x] delete /v1/messages/{message_id}
 
 - [ ] profiles
     - [ ] get /v1/profiles

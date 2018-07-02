@@ -76,7 +76,7 @@ const kokoroIo = new kokoro.io({
     - [x] confirm_subscription
     - [x] reject_subscription
     - [x] send
-- [ ] PreparaEvent
+- [ ] PriparaEvent
     - [ ] subscribed
     - [x] message_created
     - [ ] ？？？
@@ -104,10 +104,10 @@ const kokoroIo = new kokoro.io({
     - [x] get /v1/channels/{channel_id}/messages
     - [x] post /v1/channels/{channel_id}/messages
 
-- [ ] devices
-    - [ ] get /v1/devices
-    - [ ] post /v1/devices
-    - [ ] delete /v1/devices/{device_identifier}
+- [x] devices
+    - [x] get /v1/devices
+    - [x] post /v1/devices
+    - [x] delete /v1/devices/{device_identifier}
 
 - [x] memberships
     - [x] get /v1/memberships

@@ -107,3 +107,14 @@ export interface IChannelEntity {
     messages_count: number;
     membership: IMembershipEntity;
 }
+
+export interface IDeviceEntity {
+    name: string;
+    kind: "unknown" | "ios" | "android" | "uwp" | "chrome" | "firefox" | "official_web";
+    device_identifier: string;
+    notification_identifier: string;
+    subscribe_notification: boolean;
+    last_activity_at: string;
+    push_registered: boolean;
+    access_token: IAccessTokenEntity;
+}

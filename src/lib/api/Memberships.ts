@@ -48,11 +48,11 @@ export default class Memberships extends ApiBase {
             method: "DELETE",
             headers: this.generateHeader(),
         });
-        if (!response.ok) {
+        if (!response.status.toString().startsWith("2")) {
             throw new Error();
         }
 
-        return response.json() as any as IMembershipEntity;
+        return response;
     }
 
     public async putMembership(id: string, body: IPutMembershipBody) {

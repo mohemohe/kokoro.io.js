@@ -8,7 +8,7 @@ export default class Messages extends ApiBase {
             method: "DELETE",
             headers: this.generateHeader(),
         });
-        if (!response.ok) {
+        if (!response.status.toString().startsWith("2")) {
             throw new Error();
         }
 

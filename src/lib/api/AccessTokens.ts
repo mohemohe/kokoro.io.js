@@ -37,7 +37,7 @@ export default class AccessTokens extends ApiBase {
             method: "DELETE",
             headers: this.generateHeader(),
         });
-        if (response.status !== 204) {
+        if (!response.status.toString().startsWith("2")) {
             throw new Error();
         }
 

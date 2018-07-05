@@ -73,7 +73,7 @@ export interface IMessageEntity {
     published_at: string;
     nsfw: boolean;
     channel: IChannelEntity;
-    profile: IChannelWithoutMembershipEntity;
+    profile: IChannelWithoutMembershipsEntity;
 }
 
 export interface IEmbedContentEntity {

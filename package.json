@@ -23,6 +23,7 @@
   "scripts": {
     "build": "tsc",
     "postinstall": "postinstall-build dist",
-    "prepack": "rm -rf dist"
+    "prepack": "rm -rf dist",
+    "test": "tsc --noEmit"
   }
 }

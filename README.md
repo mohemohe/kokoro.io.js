@@ -1,4 +1,4 @@
-# kokoro.io.js
+# kokoro.io.js (kokoro-io)
 
 [kokoro.io](https://kokoro.io) SDK for Node.js
 
@@ -8,11 +8,12 @@ https://github.com/mohemohe/kokoro.io.js/wiki/%E8%A8%AD%E8%A8%88%E6%96%B9%E9%87%
 
 ## インストール
 
-npmには公開していません
-
 ```bash
-yarn add mohemohe/kokoro.io.js
+yarn add kokoro-io
 ```
+
+TypeScriptで書かれたソースをpostinstallで自動的にビルドします。
+型定義ファイルのd.tsも同時に出力します。
 
 ## サンプル
 

@@ -22,6 +22,7 @@
   "repository": "git@github.com:mohemohe/kokoro.io.js.git",
   "scripts": {
     "build": "tsc",
-    "postinstall": "postinstall-build dist"
+    "postinstall": "postinstall-build dist",
+    "prepack": "rm -rf dist"
   }
 }

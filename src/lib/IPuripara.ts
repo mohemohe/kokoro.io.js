@@ -5,9 +5,9 @@ export interface IAccessTokenEntity {
     kind: "user" | "device" | "essential";
 }
 
-export interface IMembershipEntity {
+export interface IMembershipWithoutChannelEntity {
     id: string;
-    channel: IChannelWithoutMembershipEntity;
+    channel: IChannelWithoutMembershipsEntity;
     authority: string;
     disable_notification: boolean;
     notification_policy: string;
@@ -17,6 +17,10 @@ export interface IMembershipEntity {
     visible: boolean;
     muted: boolean;
     profile: IProfileEntity;
+}
+
+export interface IMembershipEntity extends IMembershipWithoutChannelEntity {
+    channel: IChannelWithoutMembershipsEntity;
 }
 
 export interface IProfileEntity {
@@ -36,7 +40,7 @@ export interface IAvatarEntity  {
     is_default: boolean;
 }
 
-export interface IChannelWithoutMembershipEntity {
+export interface IChannelWithoutMembershipsEntity {
     id: string;
     channel_name: string;
     kind: string;
@@ -45,6 +49,11 @@ export interface IChannelWithoutMembershipEntity {
     latest_message_id?: number;
     latest_message_published_at?: string;
     messages_count: number;
+}
+
+export interface IChannelWithMembershipsEntity extends IChannelWithoutMembershipsEntity {
+    membership: IMembershipEntity;
+    memberships: IMembershipWithoutChannelEntity[];
 }
 
 export interface IMessageEntity {

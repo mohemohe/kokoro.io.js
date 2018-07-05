@@ -1,6 +1,17 @@
 import fetch from "node-fetch";
 import ApiBase from "./ApiBase";
-import { IMessageEntity, IChannelEntity } from "../IPuripara";
+import { IMessageEntity, IChannelEntity, IChannelWithMembershipsEntity } from "../IPuripara";
+
+export interface IPutChannelBody {
+    channel_name?: string;
+    description?: string;
+}
+
+export interface IPostChannelBody {
+    channel_name: string;
+    description: string;
+    kind?: "public_channel" | "private_channel";
+}
 
 export interface IPostChannelMessageBody {
     message: string;
@@ -32,6 +43,78 @@ export default class Channels extends ApiBase {
         }
 
         return response.json() as any as IChannelEntity;
+    }
+
+    public async putArchiveChannel(channelId: string) {
+        const response = await fetch(`${this.baseUrl}/api/v1/channels/${channelId}/archive`, {
+            method: "PUT",
+            headers: this.generateHeader(),
+        });
+        if (!response.status.toString().startsWith("2")) {
+            throw new Error();
+        }
+
+        return response;
+    }
+
+    public async putUnarchiveChannel(channelId: string) {
+        const response = await fetch(`${this.baseUrl}/api/v1/channels/${channelId}/unarchive`, {
+            method: "PUT",
+            headers: this.generateHeader(),
+        });
+        if (!response.status.toString().startsWith("2")) {
+            throw new Error();
+        }
+
+        return response;
+    }
+
+    public async getChannelMemberships(channelId: string) {
+        const response = await fetch(`${this.baseUrl}/api/v1/channels/${channelId}/memberships`, {
+            method: "GET",
+            headers: this.generateHeader(),
+        });
+        if (!response.ok) {
+            throw new Error();
+        }
+
+        return response.json() as any as IChannelWithMembershipsEntity;
+    }
+
+    public async postChannel(body: IPostChannelBody) {
+        const data: any = {};
+        Object.keys(body).forEach((key) => {
+            data[`channel[${key}]`] = (body as any)[key];
+        });
+
+        const response = await fetch(`${this.baseUrl}/api/v1/channels`, {
+            method: "POST",
+            headers: this.generateHeader(),
+            body: this.generateFormData(data),
+        });
+        if (!response.status.toString().startsWith("2")) {
+            throw new Error();
+        }
+
+        return response.json() as any as IChannelEntity;
+    }
+
+    public async putChannel(channelId: string, body: IPutChannelBody) {
+        const data: any = {};
+        Object.keys(body).forEach((key) => {
+            data[`channel[${key}]`] = (body as any)[key];
+        });
+
+        const response = await fetch(`${this.baseUrl}/api/v1/channels/${channelId}`, {
+            method: "PUT",
+            headers: this.generateHeader(),
+            body: this.generateFormData(data),
+        });
+        if (!response.status.toString().startsWith("2")) {
+            throw new Error();
+        }
+
+        return response;
     }
 
     public async getChannelMessages(channelId: string, limit?: number, before_id?: number, after_id?: number) {

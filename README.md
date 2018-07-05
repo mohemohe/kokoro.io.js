@@ -12,7 +12,7 @@ https://github.com/mohemohe/kokoro.io.js/wiki/%E8%A8%AD%E8%A8%88%E6%96%B9%E9%87%
 yarn add kokoro-io
 ```
 
-TypeScriptで書かれたソースをpostinstallで自動的にビルドします。
+TypeScriptで書かれたソースをpostinstallで自動的にビルドします。  
 型定義ファイルのd.tsも同時に出力します。
 
 ## サンプル
@@ -94,12 +94,12 @@ const kokoroIo = new kokoro.io({
 
 - [ ] channels
     - [x] get /v1/channels/{channel_id}
-    - [ ] put /v1/channels/{channel_id}
-    - [ ] put /v1/channels/{channel_id}/archive
-    - [ ] put /v1/channels/{channel_id}/unarchive
-    - [ ] get /v1/channels/{channel_id}/memberships
+    - [x] put /v1/channels/{channel_id}
+    - [x] put /v1/channels/{channel_id}/archive
+    - [x] put /v1/channels/{channel_id}/unarchive
+    - [x] get /v1/channels/{channel_id}/memberships
     - [x] get /v1/channels
-    - [ ] post /v1/channels
+    - [x] post /v1/channels
     - [ ] post /v1/channels/direct_message
     - [ ] put /v1/channels/{channel_id}/manage_members/{member_id}
     - [x] get /v1/channels/{channel_id}/messages

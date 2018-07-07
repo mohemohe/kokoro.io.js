@@ -20,8 +20,8 @@ TypeScriptで書かれたソースをpostinstallで自動的にビルドしま�
 ### stream
 
 ```js
-require('source-map-support').install();
-const kokoro = require('kokoro-io');
+import kokoro from 'kokoro-io';
+// または const kokoro = require('kokoro-io');
 
 const kokoroIo = new kokoro.io({
     accessToken: 'XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX',
@@ -51,8 +51,8 @@ kokoroIo.Stream.connect();
 ### bot
 
 ```js
-require('source-map-support').install();
-const kokoro = require('kokoro-io');
+import kokoro from 'kokoro-io';
+// または const kokoro = require('kokoro-io');
 
 const kokoroIo = new kokoro.io({
     accessToken: 'XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX',
@@ -68,6 +68,9 @@ const kokoroIo = new kokoro.io({
 ## 実装ステータス
 
 ### Stream
+
+npmの[actioncable](https://www.npmjs.com/package/actioncable)はイマイチ（今どきCoffeeScriptはちょっと）なので解析して疑似っています。  
+動作確認は行っているので繋がらないことはないと思いますが、Rails公式ではないので不安定かもしれません。
 
 - [ ] ActionCable
     - [x] connect
@@ -92,7 +95,7 @@ const kokoroIo = new kokoro.io({
 - [x] bot
     - [x] post /v1/bot/channels/{channel_id}/messages
 
-- [ ] channels
+- [x] channels
     - [x] get /v1/channels/{channel_id}
     - [x] put /v1/channels/{channel_id}
     - [x] put /v1/channels/{channel_id}/archive
@@ -100,8 +103,8 @@ const kokoroIo = new kokoro.io({
     - [x] get /v1/channels/{channel_id}/memberships
     - [x] get /v1/channels
     - [x] post /v1/channels
-    - [ ] post /v1/channels/direct_message
-    - [ ] put /v1/channels/{channel_id}/manage_members/{member_id}
+    - [x] post /v1/channels/direct_message
+    - [x] put /v1/channels/{channel_id}/manage_members/{member_id}
     - [x] get /v1/channels/{channel_id}/messages
     - [x] post /v1/channels/{channel_id}/messages
 

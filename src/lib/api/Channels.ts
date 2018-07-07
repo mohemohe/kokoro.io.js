@@ -20,6 +20,14 @@ export interface IPostChannelMessageBody {
     expand_embed_contents?: string;
 }
 
+export interface IPostDirectMessageBody {
+    target_user_profile_id: string;
+}
+
+export interface IPutMemberAuthority {
+    authority: string;
+}
+
 export default class Channels extends ApiBase {
     public async getChannels(archived: boolean = true) {
         const response = await fetch(`${this.baseUrl}/api/v1/channels?archived=${archived}`, {
@@ -145,6 +153,32 @@ export default class Channels extends ApiBase {
             throw new Error();
         }
 
-        return response.json() as any as IMessageEntity[];
+        return response.json() as any as IMessageEntity;
+    }
+
+    public async postDirectMessage(body: IPostDirectMessageBody) {
+        const response = await fetch(`${this.baseUrl}/api/v1/channels/direct_message `, {
+            method: "POST",
+            headers: this.generateHeader(),
+            body: this.generateFormData(body),
+        });
+        if (!response.ok) {
+            throw new Error();
+        }
+
+        return response.json() as any as IMessageEntity;
+    }
+
+    public async putMemberAuthority(channelId: string, memberId: string, body: IPutMemberAuthority) {
+        const response = await fetch(`${this.baseUrl}/api/v1/channels/direct_message `, {
+            method: "POST",
+            headers: this.generateHeader(),
+            body: this.generateFormData(body),
+        });
+        if (!response.status.toString().startsWith("2")) {
+            throw new Error();
+        }
+
+        return response;
     }
 }

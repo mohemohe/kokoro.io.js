@@ -8,10 +8,10 @@ export interface IAccessTokenEntity {
 export interface IMembershipWithoutChannelEntity {
     id: string;
     channel: IChannelWithoutMembershipsEntity;
-    authority: string;
+    authority: "administrator" | "maintainer" | "member" | "invited";
     disable_notification: boolean;
-    notification_policy: string;
-    read_state_tracking_policy: string;
+    notification_policy: "all_messages" | "only_mentions" | "nothing";
+    read_state_tracking_policy: "keep_latest" | "consume_last" | "consume_latest";
     latest_read_message_id: number;
     unread_count: number;
     visible: boolean;

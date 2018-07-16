@@ -24,26 +24,26 @@ import kokoro from 'kokoro-io';
 // または const kokoro = require('kokoro-io');
 
 const kokoroIo = new kokoro.io({
-    accessToken: 'XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX',
+	accessToken: 'XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX',
 });
 
 kokoroIo.Stream.on('connect', async () => {
-    const memberships = await kokoroIo.Api.Memberships.getMemberships();
-    const channelIds = kokoroIo.Helper.membershipsToChannelIds(memberships);
-    kokoroIo.Helper.subscribeChatChannelByChannelIds(kokoroIo.Stream, channelIds);
+	const memberships = await kokoroIo.Api.Memberships.getMemberships();
+	const channelIds = kokoroIo.Helper.membershipsToChannelIds(memberships);
+	kokoroIo.Helper.subscribeChatChannelByChannelIds(kokoroIo.Stream, channelIds);
 
-    const postChannelId = kokoroIo.Helper.membershipsToChannelIdByChannelName(memberships, "kokoro.io/テスト用");
-    if (postChannelId) {
-        kokoroIo.Api.Channels.postChannelMessage(postChannelId, {
-            message: 'もこたんインしたお！',
-        });
-    }
+	const postChannelId = kokoroIo.Helper.membershipsToChannelIdByChannelName(memberships, "kokoro.io/テスト用");
+	if (postChannelId) {
+		kokoroIo.Api.Channels.postChannelMessage(postChannelId, {
+			message: 'もこたんインしたお！',
+		});
+	}
 });
 kokoroIo.Stream.on('chat', (message) => {
-    console.log('message:', message);
+	console.log('message:', message);
 });
 kokoroIo.Stream.on('event', (event) => {
-    console.log('event:', event);
+	console.log('event:', event);
 });
 kokoroIo.Stream.connect();
 ```
@@ -55,13 +55,13 @@ import kokoro from 'kokoro-io';
 // または const kokoro = require('kokoro-io');
 
 const kokoroIo = new kokoro.io({
-    accessToken: 'XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX',
+	accessToken: 'XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX',
 });
 
 (async () => {
-    kokoroIo.Api.Bot.postChannelMessage('JPERDC16M', {
-        message: 'hu',
-    });
+	kokoroIo.Api.Bot.postChannelMessage('JPERDC16M', {
+		message: 'hu',
+	});
 })();
 ```
 
@@ -73,57 +73,57 @@ npmの[actioncable](https://www.npmjs.com/package/actioncable)はイマイチ（
 動作確認は行っているので繋がらないことはないと思いますが、Rails公式ではないので不安定かもしれません。
 
 - [ ] ActionCable
-    - [x] connect
-    - [x] disconnect
-    - [x] welcome
-    - [ ] ping
-    - [x] confirm_subscription
-    - [x] reject_subscription
-    - [x] send
+	- [x] connect
+	- [x] disconnect
+	- [x] welcome
+	- [ ] ping
+	- [x] confirm_subscription
+	- [x] reject_subscription
+	- [x] send
 - [ ] PriparaEvent
-    - [ ] subscribed
-    - [x] message_created
-    - [ ] ？？？
+	- [ ] subscribed
+	- [x] message_created
+	- [ ] ？？？
 
 ### API
 
 - [x] access_tokens
-    - [x] get /v1/access_tokens
-    - [x] post /v1/access_tokens
-    - [x] delete /v1/access_tokens/{access_token_id}
+	- [x] get /v1/access_tokens
+	- [x] post /v1/access_tokens
+	- [x] delete /v1/access_tokens/{access_token_id}
 
 - [x] bot
-    - [x] post /v1/bot/channels/{channel_id}/messages
+	- [x] post /v1/bot/channels/{channel_id}/messages
 
 - [x] channels
-    - [x] get /v1/channels/{channel_id}
-    - [x] put /v1/channels/{channel_id}
-    - [x] put /v1/channels/{channel_id}/archive
-    - [x] put /v1/channels/{channel_id}/unarchive
-    - [x] get /v1/channels/{channel_id}/memberships
-    - [x] get /v1/channels
-    - [x] post /v1/channels
-    - [x] post /v1/channels/direct_message
-    - [x] put /v1/channels/{channel_id}/manage_members/{member_id}
-    - [x] get /v1/channels/{channel_id}/messages
-    - [x] post /v1/channels/{channel_id}/messages
+	- [x] get /v1/channels/{channel_id}
+	- [x] put /v1/channels/{channel_id}
+	- [x] put /v1/channels/{channel_id}/archive
+	- [x] put /v1/channels/{channel_id}/unarchive
+	- [x] get /v1/channels/{channel_id}/memberships
+	- [x] get /v1/channels
+	- [x] post /v1/channels
+	- [x] post /v1/channels/direct_message
+	- [x] put /v1/channels/{channel_id}/manage_members/{member_id}
+	- [x] get /v1/channels/{channel_id}/messages
+	- [x] post /v1/channels/{channel_id}/messages
 
 - [x] devices
-    - [x] get /v1/devices
-    - [x] post /v1/devices
-    - [x] delete /v1/devices/{device_identifier}
+	- [x] get /v1/devices
+	- [x] post /v1/devices
+	- [x] delete /v1/devices/{device_identifier}
 
 - [x] memberships
-    - [x] get /v1/memberships
-    - [x] post /v1/memberships
-    - [x] delete /v1/memberships/{id}
-    - [x] put /v1/memberships/{id}
-    - [x] put /v1/memberships/{id}/join
+	- [x] get /v1/memberships
+	- [x] post /v1/memberships
+	- [x] delete /v1/memberships/{id}
+	- [x] put /v1/memberships/{id}
+	- [x] put /v1/memberships/{id}/join
 
 - [x] messages
-    - [x] delete /v1/messages/{message_id}
+	- [x] delete /v1/messages/{message_id}
 
 - [x] profiles
-    - [x] get /v1/profiles
-    - [x] get /v1/profiles/me
-    - [x] put /v1/profiles/me
+	- [x] get /v1/profiles
+	- [x] get /v1/profiles/me
+	- [x] put /v1/profiles/me

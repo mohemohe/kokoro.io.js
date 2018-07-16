@@ -1,4 +1,4 @@
-import {IMembershipEntity} from "./IPuripara";
+import { IMembershipEntity } from "./IPuripara";
 import ActionCable from "./ActionCable";
 
 export default class Helper {

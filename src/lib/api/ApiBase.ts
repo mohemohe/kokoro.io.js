@@ -1,4 +1,4 @@
-import {Response} from "node-fetch";
+import { Response } from "node-fetch";
 import FormData from "form-data";
 import { IOption } from "../kokoro.io";
 
@@ -20,7 +20,7 @@ export default class ApiBase {
 		};
 	}
 
-	protected generateQueryParameter(params: {[index: string]: string | number | undefined}) {
+	protected generateQueryParameter(params: { [index: string]: string | number | undefined }) {
 		const queryArray: string[] = [];
 		Object.keys(params).forEach((key) => {
 			if (params[key]) {

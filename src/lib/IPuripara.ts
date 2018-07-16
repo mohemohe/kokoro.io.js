@@ -34,7 +34,7 @@ export interface IProfileEntity {
 	invited_channels_count: number;
 }
 
-export interface IAvatarEntity  {
+export interface IAvatarEntity {
 	size: number;
 	url: string;
 	is_default: boolean;

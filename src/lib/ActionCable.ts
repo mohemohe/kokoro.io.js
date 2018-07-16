@@ -1,5 +1,6 @@
 import {EventEmitter} from "events";
 import WebSocket from "ws";
+import { IOption } from "./kokoro.io";
 
 const EventType = {
 	Connect: "connect",
@@ -46,12 +47,12 @@ export default class ActionCable extends EventEmitter {
 	private autoReconnect: boolean;
 	private websocket?: WebSocket;
 
-	constructor(url: string, origin: string, accessToken: string) {
+	constructor(option: IOption) {
 		super();
 
-		this.url = url;
-		this.origin = origin;
-		this.accessToken = accessToken;
+		this.url = option.cableUrl!;
+		this.origin = option.baseUrl!;
+		this.accessToken = option.accessToken;
 		this.autoReconnect = false;
 	}
 

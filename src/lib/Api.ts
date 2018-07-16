@@ -5,6 +5,7 @@ import Devices from "./api/Devices";
 import Memberships from "./api/Memberships";
 import Messages from "./api/Messages";
 import Profiles from "./api/Profiles";
+import { IOption } from "./kokoro.io";
 
 export default class Api {
 	public AccessTokens: AccessTokens;
@@ -15,13 +16,13 @@ export default class Api {
 	public Messages: Messages;
 	public Profiles: Profiles;
 
-	constructor(baseUrl: string, accessToken: string) {
-		this.AccessTokens = new AccessTokens(baseUrl, accessToken);
-		this.Bot = new Bot(baseUrl, accessToken);
-		this.Channels = new Channels(baseUrl, accessToken);
-		this.Devices = new Devices(baseUrl, accessToken);
-		this.Memberships = new Memberships(baseUrl, accessToken);
-		this.Messages = new Messages(baseUrl, accessToken);
-		this.Profiles = new Profiles(baseUrl, accessToken);
+	constructor(option: IOption) {
+		this.AccessTokens = new AccessTokens(option);
+		this.Bot = new Bot(option);
+		this.Channels = new Channels(option);
+		this.Devices = new Devices(option);
+		this.Memberships = new Memberships(option);
+		this.Messages = new Messages(option);
+		this.Profiles = new Profiles(option);
 	}
 }

@@ -9,7 +9,7 @@ export default class Messages extends ApiBase {
 			headers: this.generateHeader(),
 		});
 		if (!response.status.toString().startsWith("2")) {
-			throw new Error();
+			throw await this.generateApiErrorObject(response);
 		}
 
 		return response.json() as any as IMessageEntity;

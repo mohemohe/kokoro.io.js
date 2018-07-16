@@ -16,8 +16,8 @@ export default class Devices extends ApiBase {
 			method: "GET",
 			headers: this.generateHeader(),
 		});
-		if (!response.ok) {
-			throw new Error();
+		if (!this.isSuccessResponse(response)) {
+			throw await this.generateApiErrorObject(response);
 		}
 
 		return response.json() as any as IDeviceEntity[];
@@ -29,8 +29,8 @@ export default class Devices extends ApiBase {
 			headers: this.generateHeader(),
 			body: this.generateFormData(body),
 		});
-		if (!response.ok) {
-			throw new Error();
+		if (!this.isSuccessResponse(response)) {
+			throw await this.generateApiErrorObject(response);
 		}
 
 		return response.json() as any as IDeviceEntity;
@@ -42,7 +42,7 @@ export default class Devices extends ApiBase {
 			headers: this.generateHeader(),
 		});
 		if (!response.status.toString().startsWith("2")) {
-			throw new Error();
+			throw await this.generateApiErrorObject(response);
 		}
 
 		return;

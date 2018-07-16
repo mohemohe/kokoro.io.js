@@ -14,8 +14,8 @@ export default class Profiles extends ApiBase {
 			method: "GET",
 			headers: this.generateHeader(),
 		});
-		if (!response.ok) {
-			throw new Error();
+		if (!this.isSuccessResponse(response)) {
+			throw await this.generateApiErrorObject(response);
 		}
 
 		return response.json() as any as IProfileEntity[];
@@ -26,8 +26,8 @@ export default class Profiles extends ApiBase {
 			method: "GET",
 			headers: this.generateHeader(),
 		});
-		if (!response.ok) {
-			throw new Error();
+		if (!this.isSuccessResponse(response)) {
+			throw await this.generateApiErrorObject(response);
 		}
 
 		return response.json() as any as IProfileEntity;
@@ -39,8 +39,8 @@ export default class Profiles extends ApiBase {
 			headers: this.generateHeader(),
 			body: this.generateFormData(body),
 		});
-		if (!response.ok) {
-			throw new Error();
+		if (!this.isSuccessResponse(response)) {
+			throw await this.generateApiErrorObject(response);
 		}
 
 		return response.json() as any as IProfileEntity;

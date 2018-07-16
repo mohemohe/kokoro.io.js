@@ -24,7 +24,8 @@ import kokoro from 'kokoro-io';
 // または const kokoro = require('kokoro-io');
 
 const kokoroIo = new kokoro.io({
-	accessToken: 'XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX',
+  accessToken: 'XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX',
+  autoReconnect: true, // Stream切断時に自動再接続を行う
 });
 
 kokoroIo.Stream.on('connect', async () => {
@@ -34,7 +35,7 @@ kokoroIo.Stream.on('connect', async () => {
 
 	const postChannelId = kokoroIo.Helper.membershipsToChannelIdByChannelName(memberships, "kokoro.io/テスト用");
 	if (postChannelId) {
-		kokoroIo.Api.Channels.postChannelMessage(postChannelId, {
+		await kokoroIo.Api.Channels.postChannelMessage(postChannelId, {
 			message: 'もこたんインしたお！',
 		});
 	}
@@ -59,7 +60,7 @@ const kokoroIo = new kokoro.io({
 });
 
 (async () => {
-	kokoroIo.Api.Bot.postChannelMessage('JPERDC16M', {
+	await kokoroIo.Api.Bot.postChannelMessage('JPERDC16M', {
 		message: 'hu',
 	});
 })();

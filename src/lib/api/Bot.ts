@@ -14,8 +14,8 @@ export default class Bot extends ApiBase {
 			headers: this.generateHeader(),
 			body: this.generateFormData(body),
 		});
-		if (!response.ok) {
-			throw new Error();
+		if (!this.isSuccessResponse(response)) {
+			throw await this.generateApiErrorObject(response);
 		}
 
 		return await response.json() as IMessageEntity;

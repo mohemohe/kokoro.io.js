@@ -10,9 +10,7 @@ interface IDefaultOption {
 	baseUrl?: string;
 	cableUrl?: string;
 	autoReconnect?: boolean;
-}
-
-interface IKokoroIoOption extends IOption  {
+	noEmitError?: boolean;
 }
 
 interface IKokoroIo {
@@ -25,6 +23,7 @@ const defaultOption: IDefaultOption = {
 	baseUrl: "https://kokoro.io",
 	cableUrl: "wss://kokoro.io/cable",
 	autoReconnect: false,
+	noEmitError: false,
 };
 
 export default class KokoroIo {
@@ -36,12 +35,15 @@ export default class KokoroIo {
 	constructor(option: IOption) {
 		this.kokoro = {
 			io: {
-				option: {...defaultOption, ...option} as IKokoroIoOption,
+				option: {
+					...defaultOption,
+					...option,
+				} as IOption,
 			},
 		};
 
-		this.Stream = new ActionCable(this.kokoro.io.option.cableUrl!, this.kokoro.io.option.baseUrl!, this.kokoro.io.option.accessToken);
-		this.Api = new Api(this.kokoro.io.option.baseUrl!, this.kokoro.io.option.accessToken);
+		this.Stream = new ActionCable(this.kokoro.io.option);
+		this.Api = new Api(this.kokoro.io.option);
 		this.Helper = Helper;
 	}
 }

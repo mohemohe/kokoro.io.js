@@ -23,8 +23,8 @@ export default class Memberships extends ApiBase {
 			method: "GET",
 			headers: this.generateHeader(),
 		});
-		if (!response.ok) {
-			throw new Error();
+		if (!this.isSuccessResponse(response)) {
+			throw await this.generateApiErrorObject(response);
 		}
 
 		return response.json() as any as IMembershipEntity[];
@@ -36,8 +36,8 @@ export default class Memberships extends ApiBase {
 			headers: this.generateHeader(),
 			body: this.generateFormData(body),
 		});
-		if (!response.ok) {
-			throw new Error();
+		if (!this.isSuccessResponse(response)) {
+			throw await this.generateApiErrorObject(response);
 		}
 
 		return response.json() as any as IMembershipEntity;
@@ -49,7 +49,7 @@ export default class Memberships extends ApiBase {
 			headers: this.generateHeader(),
 		});
 		if (!response.status.toString().startsWith("2")) {
-			throw new Error();
+			throw await this.generateApiErrorObject(response);
 		}
 
 		return response;
@@ -61,8 +61,8 @@ export default class Memberships extends ApiBase {
 			headers: this.generateHeader(),
 			body: this.generateFormData(body),
 		});
-		if (!response.ok) {
-			throw new Error();
+		if (!this.isSuccessResponse(response)) {
+			throw await this.generateApiErrorObject(response);
 		}
 
 		return response.json() as any as IMembershipEntity;
@@ -73,8 +73,8 @@ export default class Memberships extends ApiBase {
 			method: "PUT",
 			headers: this.generateHeader(),
 		});
-		if (!response.ok) {
-			throw new Error();
+		if (!this.isSuccessResponse(response)) {
+			throw await this.generateApiErrorObject(response);
 		}
 
 		return response.json() as any as IMembershipEntity;

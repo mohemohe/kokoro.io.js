@@ -12,11 +12,11 @@ export default class AccessTokens extends ApiBase {
 			method: "GET",
 			headers: this.generateHeader(),
 		});
-		if (!response.ok) {
-			throw new Error();
+		if (!this.isSuccessResponse(response)) {
+			throw await this.generateApiErrorObject(response);
 		}
 
-		return response.json() as any as IAccessTokenEntity[];
+		return response.json() as Promise<IAccessTokenEntity[]>;
 	}
 
 	public async postAccesstoken(body: IPostAccessTokenBody) {
@@ -25,11 +25,11 @@ export default class AccessTokens extends ApiBase {
 			headers: this.generateHeader(),
 			body: this.generateFormData(body),
 		});
-		if (!response.ok) {
-			throw new Error();
+		if (!this.isSuccessResponse(response)) {
+			throw await this.generateApiErrorObject(response);
 		}
 
-		return response.json() as any as IAccessTokenEntity;
+		return response.json() as Promise<IAccessTokenEntity>;
 	}
 
 	public async deleteAccesstoken(id: string) {
@@ -37,8 +37,8 @@ export default class AccessTokens extends ApiBase {
 			method: "DELETE",
 			headers: this.generateHeader(),
 		});
-		if (!response.status.toString().startsWith("2")) {
-			throw new Error();
+		if (!this.isSuccessResponse(response)) {
+			throw await this.generateApiErrorObject(response);
 		}
 
 		return;

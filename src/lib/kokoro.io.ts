@@ -10,7 +10,6 @@ interface IDefaultOption {
 	baseUrl?: string;
 	cableUrl?: string;
 	autoReconnect?: boolean;
-	noEmitError?: boolean;
 }
 
 interface IKokoroIo {
@@ -23,7 +22,6 @@ const defaultOption: IDefaultOption = {
 	baseUrl: "https://kokoro.io",
 	cableUrl: "wss://kokoro.io/cable",
 	autoReconnect: false,
-	noEmitError: false,
 };
 
 export default class KokoroIo {

@@ -27,7 +27,7 @@ export default class Memberships extends ApiBase {
 			throw await this.generateApiErrorObject(response);
 		}
 
-		return response.json() as any as IMembershipEntity[];
+		return response.json() as Promise<IMembershipEntity[]>;
 	}
 
 	public async postMembership(body: IPostMembershipBody) {
@@ -40,7 +40,7 @@ export default class Memberships extends ApiBase {
 			throw await this.generateApiErrorObject(response);
 		}
 
-		return response.json() as any as IMembershipEntity;
+		return response.json() as Promise<IMembershipEntity>;
 	}
 
 	public async deleteMembership(id: string) {
@@ -65,7 +65,7 @@ export default class Memberships extends ApiBase {
 			throw await this.generateApiErrorObject(response);
 		}
 
-		return response.json() as any as IMembershipEntity;
+		return response.json() as Promise<IMembershipEntity>;
 	}
 
 	public async putJoinMembership(id: string) {
@@ -77,6 +77,6 @@ export default class Memberships extends ApiBase {
 			throw await this.generateApiErrorObject(response);
 		}
 
-		return response.json() as any as IMembershipEntity;
+		return response.json() as Promise<IMembershipEntity>;
 	}
 }

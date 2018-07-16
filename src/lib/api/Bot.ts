@@ -18,6 +18,6 @@ export default class Bot extends ApiBase {
 			throw await this.generateApiErrorObject(response);
 		}
 
-		return await response.json() as IMessageEntity;
+		return response.json() as Promise<IMessageEntity>;
 	}
 }

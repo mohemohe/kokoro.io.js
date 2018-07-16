@@ -20,7 +20,7 @@ export default class Devices extends ApiBase {
 			throw await this.generateApiErrorObject(response);
 		}
 
-		return response.json() as any as IDeviceEntity[];
+		return response.json() as Promise<IDeviceEntity[]>;
 	}
 
 	public async postDevice(body: IPostDeviceBody) {
@@ -33,7 +33,7 @@ export default class Devices extends ApiBase {
 			throw await this.generateApiErrorObject(response);
 		}
 
-		return response.json() as any as IDeviceEntity;
+		return response.json() as Promise<IDeviceEntity>;
 	}
 
 	public async deleteDevice(deviceIdentifier: string) {

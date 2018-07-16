@@ -12,6 +12,6 @@ export default class Messages extends ApiBase {
 			throw await this.generateApiErrorObject(response);
 		}
 
-		return response.json() as any as IMessageEntity;
+		return response.json() as Promise<IMessageEntity>;
 	}
 }

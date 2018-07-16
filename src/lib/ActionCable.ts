@@ -121,7 +121,7 @@ export default class ActionCable extends EventEmitter {
 	}
 
 	private onMessage(data: WebSocket.Data) {
-		const json = JSON.parse(data.toString()) as IActionCableMessage;
+		const json = JSON.parse(data.toString()) as IActionCableMessage & IPuriparaMessage;
 		switch (json.type) {
 			case ActionCableEvent.Ping:
 				// NOTE: NOP
@@ -139,7 +139,7 @@ export default class ActionCable extends EventEmitter {
 				this.emit(EventType.Event, json);
 				break;
 			default:
-				const message = json as any as IPuriparaMessage;
+				const message = json as IPuriparaMessage;
 				switch (message.message.event) {
 					case PuriparaEvent.MessageCreated:
 						this.emit(EventType.Chat, message.message);

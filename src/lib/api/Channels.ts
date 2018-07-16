@@ -38,7 +38,7 @@ export default class Channels extends ApiBase {
 			throw await this.generateApiErrorObject(response);
 		}
 
-		return response.json() as any as IChannelEntity[];
+		return response.json() as Promise<IChannelEntity[]>;
 	}
 
 	public async getChannel(channelId: string) {
@@ -50,7 +50,7 @@ export default class Channels extends ApiBase {
 			throw await this.generateApiErrorObject(response);
 		}
 
-		return response.json() as any as IChannelEntity;
+		return response.json() as Promise<IChannelEntity>;
 	}
 
 	public async putArchiveChannel(channelId: string) {
@@ -86,7 +86,7 @@ export default class Channels extends ApiBase {
 			throw await this.generateApiErrorObject(response);
 		}
 
-		return response.json() as any as IChannelWithMembershipsEntity;
+		return response.json() as Promise<IChannelWithMembershipsEntity>;
 	}
 
 	public async postChannel(body: IPostChannelBody) {
@@ -104,7 +104,7 @@ export default class Channels extends ApiBase {
 			throw await this.generateApiErrorObject(response);
 		}
 
-		return response.json() as any as IChannelEntity;
+		return response.json() as Promise<IChannelEntity>;
 	}
 
 	public async putChannel(channelId: string, body: IPutChannelBody) {
@@ -139,7 +139,7 @@ export default class Channels extends ApiBase {
 			throw await this.generateApiErrorObject(response);
 		}
 
-		return response.json() as any as IMessageEntity[];
+		return response.json() as Promise<IMessageEntity[]>;
 	}
 
 	public async postChannelMessage(channelId: string, body: IPostChannelMessageBody) {
@@ -152,7 +152,7 @@ export default class Channels extends ApiBase {
 			throw await this.generateApiErrorObject(response);
 		}
 
-		return response.json() as any as IMessageEntity;
+		return response.json() as Promise<IMessageEntity>;
 	}
 
 	public async postDirectMessage(body: IPostDirectMessageBody) {
@@ -165,7 +165,7 @@ export default class Channels extends ApiBase {
 			throw await this.generateApiErrorObject(response);
 		}
 
-		return response.json() as any as IMessageEntity;
+		return response.json() as Promise<IMessageEntity>;
 	}
 
 	public async putMemberAuthority(channelId: string, memberId: string, body: IPutMemberAuthority) {

@@ -18,7 +18,7 @@ export default class Profiles extends ApiBase {
 			throw await this.generateApiErrorObject(response);
 		}
 
-		return response.json() as any as IProfileEntity[];
+		return response.json() as Promise<IProfileEntity[]>;
 	}
 
 	public async getMyProfile() {
@@ -30,7 +30,7 @@ export default class Profiles extends ApiBase {
 			throw await this.generateApiErrorObject(response);
 		}
 
-		return response.json() as any as IProfileEntity;
+		return response.json() as Promise<IProfileEntity>;
 	}
 
 	public async putMyProfile(body: IPutMyProfileBody) {
@@ -43,6 +43,6 @@ export default class Profiles extends ApiBase {
 			throw await this.generateApiErrorObject(response);
 		}
 
-		return response.json() as any as IProfileEntity;
+		return response.json() as Promise<IProfileEntity>;
 	}
 }

@@ -1,15 +1,15 @@
 import { EventEmitter } from "events";
-import WebSocket from "ws";
 import { IOption } from "./kokoro.io";
+import WebSocket from "ws";
 
 const EventType = {
 	Connect: "connect",
 	Disconnect: "disconnect",
 	Chat: "chat",
 	Event: "event",
-	Error: "error",
+	Error: "kokoro.io.error",
 };
-export type EventType = keyof typeof EventType;
+type EventType = keyof typeof EventType;
 
 const ActionCableEvent = {
 	Welcome: "welcome",
@@ -45,7 +45,11 @@ export default class ActionCable extends EventEmitter {
 	private origin: string;
 	private accessToken: string;
 	private autoReconnect: boolean;
+	private retryCount: number;
+	private retryHandler?: NodeJS.Timer;
+	private timeoutHandler?: NodeJS.Timer;
 	private websocket?: WebSocket;
+	public Event = EventType;
 
 	constructor(option: IOption) {
 		super();
@@ -53,7 +57,8 @@ export default class ActionCable extends EventEmitter {
 		this.url = option.cableUrl!;
 		this.origin = option.baseUrl!;
 		this.accessToken = option.accessToken;
-		this.autoReconnect = false;
+		this.autoReconnect = option.autoReconnect!;
+		this.retryCount = 0;
 	}
 
 	public connect(autoReconnect?: boolean) {
@@ -65,19 +70,26 @@ export default class ActionCable extends EventEmitter {
 			this.autoReconnect = autoReconnect;
 		}
 
-		this.websocket = new WebSocket(this.url, {
-			origin: this.origin,
-			headers: {
-				"X-Access-Token": this.accessToken,
-			},
-		});
-		this.websocket.on("error", this.onError.bind(this));
-		this.websocket.on("open", this.onConnect.bind(this));
-		this.websocket.on("close", this.onDisconnect.bind(this));
-		this.websocket.on("message", this.onMessage.bind(this));
+		try {
+			this.websocket = new (require("ws"))(this.url, {
+				origin: this.origin,
+				headers: {
+					"X-Access-Token": this.accessToken,
+				},
+			}) as WebSocket;
+			this.websocket.on("error", this.onError.bind(this));
+			this.websocket.on("open", this.onConnect.bind(this));
+			this.websocket.on("close", this.onDisconnect.bind(this));
+			this.websocket.on("message", this.onMessage.bind(this));
+		} catch (e) {
+			this.onDisconnect();
+		}
 	}
 
 	public dispose() {
+		if (this.retryHandler) {
+			clearTimeout(this.retryHandler);
+		}
 		if (this.websocket) {
 			this.websocket.close();
 			delete this.websocket;
@@ -90,13 +102,18 @@ export default class ActionCable extends EventEmitter {
 
 	public send(command: string, data?: any, identifier?: any) {
 		if (this.websocket) {
-			const json = JSON.stringify({
+			const message = {
 				command,
 				identifier: JSON.stringify(identifier || {
 					channel: "ChatChannel",
 				}),
 				data: data ? JSON.stringify(data) : undefined,
-			});
+			};
+			if (process && process.env && process.env.NODE_ENV === "debug") {
+				// tslint:disable-next-line:no-console
+				console.log("[kokoro.io] ActionCable send:", message);
+			}
+			const json = JSON.stringify(message);
 			this.websocket.send(json);
 		}
 	}
@@ -116,15 +133,38 @@ export default class ActionCable extends EventEmitter {
 
 		if (this.autoReconnect) {
 			this.dispose();
-			this.connect();
+
+			this.retryCount++;
+			const waitTime = this.waitTime;
+			// tslint:disable-next-line:no-console
+			console.log(`[kokoro.io] waiting for reconnect: ${waitTime}sec.`);
+			this.retryHandler = setTimeout(() => {
+				this.connect();
+			}, this.waitTime * 1000);
 		}
+	}
+
+	private get waitTime() {
+		const min = this.retryCount;
+		const max = Math.pow(2, this.retryCount);
+		return Math.floor(Math.random() * (max - min)) + min;
 	}
 
 	private onMessage(data: WebSocket.Data) {
 		const json = JSON.parse(data.toString()) as IActionCableMessage & IPuriparaMessage;
+		if (process && process.env && process.env.NODE_ENV === "debug") {
+			// tslint:disable-next-line:no-console
+			console.log("[kokoro.io] ActionCable received:", json);
+		}
 		switch (json.type) {
 			case ActionCableEvent.Ping:
-				// NOTE: NOP
+				this.send("pong");
+				if (this.timeoutHandler) {
+					clearTimeout(this.timeoutHandler);
+				}
+				this.timeoutHandler = setTimeout(() => {
+					this.onDisconnect();
+				}, 10 * 1000);
 				break;
 			case ActionCableEvent.Welcome:
 				this.send("subscribe");
@@ -133,6 +173,7 @@ export default class ActionCable extends EventEmitter {
 				this.emit(EventType.Event, json);
 				// tslint:disable-next-line:no-console
 				console.log("[kokoro.io] ActionCable connected");
+				this.retryCount = 0;
 				this.emit(EventType.Connect);
 				break;
 			case ActionCableEvent.RejectSubscription:

@@ -29,7 +29,7 @@ const kokoroIo = new kokoro.io({
   autoReconnect: true, // Stream切断時に自動再接続を行う
 });
 
-kokoroIo.Stream.on('connect', async () => {
+kokoroIo.Stream.on(kokoroIo.Stream.Event.Connect, async () => {
   const memberships = await kokoroIo.Api.Memberships.getMemberships();
   const channelIds = kokoroIo.Helper.membershipsToChannelIds(memberships);
   kokoroIo.Helper.subscribeChatChannelByChannelIds(kokoroIo.Stream, channelIds);
@@ -41,10 +41,10 @@ kokoroIo.Stream.on('connect', async () => {
     });
   }
 });
-kokoroIo.Stream.on('chat', (message) => {
+kokoroIo.Stream.on(kokoroIo.Stream.Event.Chat, (message) => {
   console.log('message:', message);
 });
-kokoroIo.Stream.on('event', (event) => {
+kokoroIo.Stream.on(kokoroIo.Stream.Event.Event, (event) => {
   console.log('event:', event);
 });
 kokoroIo.Stream.connect();
@@ -62,7 +62,7 @@ const kokoroIo = new kokoro.io({
 
 (async () => {
   await kokoroIo.Api.Bot.postChannelMessage('JPERDC16M', {
-    message: 'hu',
+    message: 'hi',
   });
 })();
 ```
@@ -74,11 +74,11 @@ const kokoroIo = new kokoro.io({
 npmの[actioncable](https://www.npmjs.com/package/actioncable)はイマイチ（今どきCoffeeScriptはちょっと）なので解析して疑似っています。  
 動作確認は行っているので繋がらないことはないと思いますが、Rails公式ではないので不安定かもしれません。
 
-- [ ] ActionCable
+- [x] ActionCable
   - [x] connect
   - [x] disconnect
   - [x] welcome
-  - [ ] ping
+  - [x] ping
   - [x] confirm_subscription
   - [x] reject_subscription
   - [x] send

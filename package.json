@@ -21,12 +21,14 @@
     "tslint": "^5.10.0"
   },
   "license": "WTFPL",
-  "main": "dist/index.js",
+  "main": "dist/src/index.js",
   "repository": "git@github.com:mohemohe/kokoro.io.js.git",
   "scripts": {
     "build": "tsc",
     "postinstall": "postinstall-build dist",
     "prepack": "rm -rf dist",
-    "test": "tsc --noEmit"
+    "test:build": "tsc --noEmit",
+    "test:unit": "ts-node test/Runner.ts",
+    "test": "yarn test:build && yarn test:unit"
   }
 }

@@ -45,6 +45,7 @@ export default class ActionCable extends EventEmitter {
 	private origin: string;
 	private accessToken: string;
 	private autoReconnect: boolean;
+	private streamTimeoutSec: number;
 	private retryCount: number;
 	private retryHandler?: NodeJS.Timer;
 	private timeoutHandler?: NodeJS.Timer;
@@ -58,6 +59,7 @@ export default class ActionCable extends EventEmitter {
 		this.origin = option.baseUrl!;
 		this.accessToken = option.accessToken;
 		this.autoReconnect = option.autoReconnect!;
+		this.streamTimeoutSec = option.streamTimeoutSec!;
 		this.retryCount = 0;
 	}
 
@@ -173,7 +175,7 @@ export default class ActionCable extends EventEmitter {
 				});
 				this.timeoutHandler = setTimeout(() => {
 					this.onDisconnect();
-				}, 10 * 1000);
+				}, this.streamTimeoutSec * 1000);
 				break;
 			case ActionCableEvent.Welcome:
 				this.send("subscribe");

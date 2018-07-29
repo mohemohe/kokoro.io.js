@@ -1,7 +1,7 @@
 {
   "name": "kokoro-io",
   "description": "kokoro.io SDK for Node.js",
-  "version": "0.9.0",
+  "version": "0.9.1",
   "author": "mohemohe",
   "dependencies": {
     "@types/form-data": "^2.2.1",

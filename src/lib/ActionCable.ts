@@ -45,6 +45,7 @@ export default class ActionCable extends EventEmitter {
 	private origin: string;
 	private accessToken: string;
 	private autoReconnect: boolean;
+	private streamTimeoutSec: number;
 	private retryCount: number;
 	private retryHandler?: NodeJS.Timer;
 	private timeoutHandler?: NodeJS.Timer;
@@ -58,6 +59,7 @@ export default class ActionCable extends EventEmitter {
 		this.origin = option.baseUrl!;
 		this.accessToken = option.accessToken;
 		this.autoReconnect = option.autoReconnect!;
+		this.streamTimeoutSec = option.streamTimeoutSec!;
 		this.retryCount = 0;
 	}
 
@@ -109,6 +111,12 @@ export default class ActionCable extends EventEmitter {
 				}),
 				data: data ? JSON.stringify(data) : undefined,
 			};
+			this.sendRaw(message);
+		}
+	}
+
+	public sendRaw(message: any): void {
+		if (this.websocket) {
 			if (process && process.env && process.env.NODE_ENV === "debug") {
 				// tslint:disable-next-line:no-console
 				console.log("[kokoro.io] ActionCable send:", message);
@@ -158,13 +166,16 @@ export default class ActionCable extends EventEmitter {
 		}
 		switch (json.type) {
 			case ActionCableEvent.Ping:
-				this.send("pong");
 				if (this.timeoutHandler) {
 					clearTimeout(this.timeoutHandler);
 				}
+				this.sendRaw({
+					type: "pong",
+					message: Math.floor(new Date().getTime() / 1000),
+				});
 				this.timeoutHandler = setTimeout(() => {
 					this.onDisconnect();
-				}, 10 * 1000);
+				}, this.streamTimeoutSec * 1000);
 				break;
 			case ActionCableEvent.Welcome:
 				this.send("subscribe");

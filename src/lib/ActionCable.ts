@@ -109,6 +109,12 @@ export default class ActionCable extends EventEmitter {
 				}),
 				data: data ? JSON.stringify(data) : undefined,
 			};
+			this.sendRaw(message);
+		}
+	}
+
+	public sendRaw(message: any): void {
+		if (this.websocket) {
 			if (process && process.env && process.env.NODE_ENV === "debug") {
 				// tslint:disable-next-line:no-console
 				console.log("[kokoro.io] ActionCable send:", message);
@@ -158,10 +164,13 @@ export default class ActionCable extends EventEmitter {
 		}
 		switch (json.type) {
 			case ActionCableEvent.Ping:
-				this.send("pong");
 				if (this.timeoutHandler) {
 					clearTimeout(this.timeoutHandler);
 				}
+				this.sendRaw({
+					type: "pong",
+					message: Math.floor(new Date().getTime() / 1000),
+				});
 				this.timeoutHandler = setTimeout(() => {
 					this.onDisconnect();
 				}, 10 * 1000);

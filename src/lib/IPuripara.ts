@@ -84,7 +84,7 @@ export interface IEmbedContentEntity {
 
 export interface IEmbedDataEntity {
 	cache_age: number;
-	medias: IEmbedDataMediaEntity;
+	medias: IEmbedDataMediaEntity[];
 	metadata_image: IEmbedDataMediaEntity;
 	restriction_policy: "Unknown" | "Safe" | "NotSafe";
 	title: string;

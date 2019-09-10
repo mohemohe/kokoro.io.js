@@ -2,12 +2,14 @@ import { IMembershipEntity } from "./IPuripara";
 import ActionCable from "./ActionCable";
 
 export default class Helper {
+	public membershipsToChannelIds = Helper.membershipsToChannelIds;
 	public static membershipsToChannelIds(memberships: IMembershipEntity[]) {
 		return memberships.map((membership: IMembershipEntity) => {
 			return membership.channel.id;
 		});
 	}
 
+	public membershipsToChannelIdByChannelName = Helper.membershipsToChannelIdByChannelName;
 	public static membershipsToChannelIdByChannelName(memberships: IMembershipEntity[], targetChannelName: string) {
 		const filtered = memberships.filter((membership: IMembershipEntity) => {
 			return membership.channel.channel_name === targetChannelName;
@@ -19,6 +21,7 @@ export default class Helper {
 		return channel.channel.id;
 	}
 
+	public subscribeChatChannelByChannelIds = Helper.subscribeChatChannelByChannelIds;
 	public static subscribeChatChannelByChannelIds(stream: ActionCable, channelIds: string[]) {
 		stream.send("message", {
 			action: "subscribe",

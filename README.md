@@ -2,11 +2,6 @@
 
 [kokoro.io](https://kokoro.io) SDK for Node.js
 
-## breaking changes!
-
-- v0.6  
-  https://github.com/mohemohe/kokoro.io.js/wiki/%E8%A8%AD%E8%A8%88%E6%96%B9%E9%87%9D
-
 ## インストール
 
 ```bash
@@ -85,6 +80,7 @@ npmの[actioncable](https://www.npmjs.com/package/actioncable)はイマイチ（
 - [ ] PriparaEvent
   - [ ] subscribed
   - [x] message_created
+  - [x] message_updated
   - [ ] ？？？
 
 ### API

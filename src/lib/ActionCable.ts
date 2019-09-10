@@ -1,43 +1,42 @@
 import { EventEmitter } from "events";
 import { IOption } from "./kokoro.io";
 import WebSocket from "ws";
+import {IMessageEntity} from "./IPuripara";
 
-const EventType = {
-	Connect: "connect",
-	Disconnect: "disconnect",
-	Chat: "chat",
-	Event: "event",
-	Error: "kokoro.io.error",
-};
-type EventType = keyof typeof EventType;
+export enum EventType {
+	Connect = "connect",
+	Disconnect = "disconnect",
+	Chat = "chat",
+	Event = "event",
+	Error = "kokoro.io.error",
+}
 
-const ActionCableEvent = {
-	Welcome: "welcome",
-	Ping: "ping",
-	ConfirmSubscription: "confirm_subscription",
-	RejectSubscription: "reject_subscription",
-};
-type ActionCableEvent = keyof typeof ActionCableEvent;
+export enum ActionCableEvent {
+	Welcome = "welcome",
+	Ping = "ping",
+	ConfirmSubscription = "confirm_subscription",
+	RejectSubscription = "reject_subscription",
+}
 
-const PuriparaEvent = {
-	MessageCreated: "message_created",
-};
-type PuriparaEvent = keyof typeof PuriparaEvent;
+export enum PuriparaEvent {
+	MessageCreated = "message_created",
+	MessageUpdated = "message_updated",
+}
 
-interface IPuriparaMessage {
+interface IPuriparaMessage<T> {
 	identifier: {
 		channel: string,
 	};
 	message: {
 		event: PuriparaEvent,
-		data: any,
+		data: T,
 	};
 }
 
-export interface IActionCableMessage {
+export interface IActionCableMessage<T> {
 	type: ActionCableEvent;
 	identifier?: any;
-	data?: any;
+	data?: T;
 }
 
 export default class ActionCable extends EventEmitter {
@@ -159,7 +158,7 @@ export default class ActionCable extends EventEmitter {
 	}
 
 	private onMessage(data: WebSocket.Data) {
-		const json = JSON.parse(data.toString()) as IActionCableMessage & IPuriparaMessage;
+		const json = JSON.parse(data.toString()) as IActionCableMessage<any> & IPuriparaMessage<any>;
 		if (process && process.env && process.env.NODE_ENV === "debug") {
 			// tslint:disable-next-line:no-console
 			console.log("[kokoro.io] ActionCable received:", json);
@@ -191,9 +190,10 @@ export default class ActionCable extends EventEmitter {
 				this.emit(EventType.Event, json);
 				break;
 			default:
-				const message = json as IPuriparaMessage;
+				const message = json as IPuriparaMessage<IMessageEntity>;
 				switch (message.message.event) {
 					case PuriparaEvent.MessageCreated:
+					case PuriparaEvent.MessageUpdated:
 						this.emit(EventType.Chat, message.message);
 						break;
 					default:

@@ -88,6 +88,7 @@ export interface IEmbedDataEntity {
 	metadata_image: IEmbedDataMediaEntity;
 	restriction_policy: "Unknown" | "Safe" | "NotSafe";
 	title: string;
+	description: string;
 	type: "MixedContent" | "SingleImage" | "SingleVideo" | "SingleAudio";
 	url: string;
 }

@@ -38,11 +38,13 @@ export default class ApiBase {
 		return form;
 	}
 
-	protected isSuccessResponse(response: Response) {
+	protected isSuccessResponse = ApiBase.isSuccessResponse;
+	protected static isSuccessResponse(response: Response) {
 		return response.status.toString().startsWith("2");
 	}
 
-	protected async generateApiErrorObject(response: Response) {
+	protected generateApiErrorObject = ApiBase.generateApiErrorObject;
+	protected static async generateApiErrorObject(response: Response) {
 		return new Error(`Invalid response, status: ${response.status} ${response.statusText}, body: ${await response.text()}`);
 	}
 }

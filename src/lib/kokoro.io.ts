@@ -1,6 +1,7 @@
 import ActionCable from "./ActionCable";
 import Api from "./Api";
 import Helper from "./Helper";
+import Devices from "./api/Devices";
 
 export interface IOption extends IDefaultOption {
 	accessToken: string;
@@ -31,6 +32,7 @@ export default class KokoroIo {
 	public Stream: ActionCable;
 	public Api: Api;
 	public Helper: Helper;
+	public static postDevice = Devices.postDevice;
 
 	constructor(option: IOption) {
 		this.kokoro = {

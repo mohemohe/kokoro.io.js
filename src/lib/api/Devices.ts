@@ -1,4 +1,5 @@
 import fetch from "node-fetch";
+import { Base64 } from "js-base64";
 import ApiBase from "./ApiBase";
 import { IDeviceEntity } from "../IPuripara";
 
@@ -23,14 +24,28 @@ export default class Devices extends ApiBase {
 		return response.json() as Promise<IDeviceEntity[]>;
 	}
 
-	public async postDevice(body: IPostDeviceBody) {
-		const response = await fetch(`${this.baseUrl}/api/v1/devices`, {
+	public static async postDevice(baseUrl: string, username: string, password: string, body: IPostDeviceBody) {
+		const headers = {
+			"X-Account-Token": Base64.encode([username, password].join(":")),
+		};
+		return Devices._postDevice(baseUrl, headers, body);
+	}
+
+	public async postDevice(username: string, password: string, body: IPostDeviceBody) {
+		const headers = {
+			"X-Account-Token": this.generateHeader(),
+		};
+		return Devices._postDevice(this.baseUrl, headers, body);
+	}
+
+	private static async _postDevice(baseUrl: string, headers: any, body: any) {
+		const response = await fetch(`${baseUrl}/api/v1/devices`, {
 			method: "POST",
-			headers: this.generateHeader(),
-			body: this.generateFormData(body),
+			headers,
+			body,
 		});
-		if (!this.isSuccessResponse(response)) {
-			throw await this.generateApiErrorObject(response);
+		if (!ApiBase.isSuccessResponse(response)) {
+			throw await ApiBase.generateApiErrorObject(response);
 		}
 
 		return response.json() as Promise<IDeviceEntity>;

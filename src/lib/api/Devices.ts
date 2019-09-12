@@ -27,6 +27,7 @@ export default class Devices extends ApiBase {
 	public static async postDevice(baseUrl: string, username: string, password: string, body: IPostDeviceBody) {
 		const headers = {
 			"X-Account-Token": Base64.encode([username, password].join(":")),
+			"Content-Type": "application/json",
 		};
 		return Devices._postDevice(baseUrl, headers, body);
 	}

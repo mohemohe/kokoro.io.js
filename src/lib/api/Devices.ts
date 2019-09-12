@@ -32,9 +32,7 @@ export default class Devices extends ApiBase {
 	}
 
 	public async postDevice(username: string, password: string, body: IPostDeviceBody) {
-		const headers = {
-			"X-Account-Token": this.generateHeader(),
-		};
+		const headers = this.generateHeader();
 		return Devices._postDevice(this.baseUrl, headers, body);
 	}
 
@@ -42,7 +40,7 @@ export default class Devices extends ApiBase {
 		const response = await fetch(`${baseUrl}/api/v1/devices`, {
 			method: "POST",
 			headers,
-			body,
+			body: JSON.stringify(body),
 		});
 		if (!ApiBase.isSuccessResponse(response)) {
 			throw await ApiBase.generateApiErrorObject(response);

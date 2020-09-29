@@ -62,3 +62,4 @@ jspm_packages/
 
 dist
 *.js
+package-lock.json

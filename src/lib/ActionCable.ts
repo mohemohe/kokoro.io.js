@@ -1,5 +1,5 @@
 import { EventEmitter } from "events";
-import { IOption } from "./kokoro.io";
+import { IOption } from "./kokoroIo";
 import WebSocket from "ws";
 
 const EventType = {

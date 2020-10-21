@@ -5,7 +5,7 @@ import Devices from "./api/Devices";
 import Memberships from "./api/Memberships";
 import Messages from "./api/Messages";
 import Profiles from "./api/Profiles";
-import { IOption } from "./kokoro.io";
+import { IOption } from "./kokoroIo";
 
 export default class Api {
 	public AccessTokens: AccessTokens;

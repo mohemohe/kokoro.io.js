@@ -1,7 +1,7 @@
 {
   "name": "kokoro-io",
   "description": "kokoro.io SDK for Node.js",
-  "version": "0.9.4",
+  "version": "0.9.5",
   "author": "mohemohe",
   "dependencies": {
     "form-data": "^2.3.2",
@@ -24,7 +24,7 @@
   "repository": "git@github.com:mohemohe/kokoro.io.js.git",
   "scripts": {
     "build": "tsc",
-    "prepack": "rm -rf dist; yarn build",
+    "prepack": "rm -rf dist; yarn build; sync; sync; sync; sleep 1",
     "test:build": "tsc --noEmit",
     "test:unit": "ts-node test/Runner.ts",
     "test": "yarn test:build && yarn test:unit"

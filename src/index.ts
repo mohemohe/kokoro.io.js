@@ -1,4 +1,4 @@
-import KokoroIo from "./lib/kokoro.io";
+import KokoroIo from "./lib/kokoroIo";
 
 export = {
 	io: KokoroIo,

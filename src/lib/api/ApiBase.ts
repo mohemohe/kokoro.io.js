@@ -1,6 +1,6 @@
 import { Response } from "node-fetch";
 import FormData from "form-data";
-import { IOption } from "../kokoro.io";
+import { IOption } from "../kokoroIo";
 
 export default class ApiBase {
 	protected option: IOption;
